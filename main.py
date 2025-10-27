@@ -11,7 +11,16 @@ YOUR_EMAIL = "test@mail.com"
 
 
 # ----------------------- SAVE PASSWORD -------------------------- #
-
+def save_password():
+    # with open("data.txt", "a") as file:
+    #     data = {
+    #         'website': website_name.get(),
+    #         'username': user_name.get(),
+    #         'password': password.get()
+    #     }
+    #
+    #     file.write(data)
+    print(website_name.get(), user_name.get(),password.get())
 
 # ----------------------- UI SETUP -------------------------- #
 #GUI window
@@ -30,14 +39,20 @@ label_user = Label(text="Email/Username:", width=LABEL_WIDTH, font=(FONT_NAME, 1
 label_password = Label(text="Password:", width=LABEL_WIDTH, font=(FONT_NAME, 12, "bold"), fg=ACCENT_COLOR, bg=BG_COLOR, justify="right")
 
 #Input
-website_input = Entry(width=53)
+#Text variables for entries
+website_name = StringVar()
+user_name = StringVar()
+password = StringVar()
+
+website_input = Entry(width=53, textvariable=website_name)
 website_input.focus()
-user_input = Entry(width=53)
+user_input = Entry(width=53, textvariable=user_name)
 user_input.insert(0, YOUR_EMAIL)
-password_input = Entry(width=32)
+password_input = Entry(width=32, textvariable=password)
+
 #Button
 generate_password_btn = Button(text="Generate Password", highlightthickness=0, bg=ACCENT_COLOR, fg="white", font=(FONT_NAME, 10))
-save_password_btn = Button(text="Save", width=39, highlightthickness=0, bg=ACCENT_COLOR, fg="white", font=(FONT_NAME, 10))
+save_password_btn = Button(text="Save", width=39, highlightthickness=0, bg=ACCENT_COLOR, fg="white", font=(FONT_NAME, 10), command=save_password)
 
 #Elements position within grid system
 canvas.grid(column=1, row=0)
