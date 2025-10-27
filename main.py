@@ -12,15 +12,10 @@ YOUR_EMAIL = "test@mail.com"
 
 # ----------------------- SAVE PASSWORD -------------------------- #
 def save_password():
-    # with open("data.txt", "a") as file:
-    #     data = {
-    #         'website': website_name.get(),
-    #         'username': user_name.get(),
-    #         'password': password.get()
-    #     }
-    #
-    #     file.write(data)
-    print(website_name.get(), user_name.get(),password.get())
+    with open("data.txt", "a") as file:
+        file.write(f"{website_name.get()} | {user_name.get()} | {password.get()} \n")
+    website_input.delete(0,END)
+    password_input.delete(0, END)
 
 # ----------------------- UI SETUP -------------------------- #
 #GUI window
