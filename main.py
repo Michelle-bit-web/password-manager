@@ -2,6 +2,7 @@ from tkinter import *
 import ctypes as ct
 from tkinter import messagebox
 import random
+import pyperclip
 
 LABEL_WIDTH = 15
 BG_COLOR = "#F2EAD3"
@@ -14,7 +15,7 @@ def generate_password():
     pw_list = get_random_char()
     random.shuffle(pw_list)
     final_password = "".join(pw_list)
-    print(final_password)
+    copy_to_clipboard(final_password)
 
 def get_random_char():
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
@@ -25,18 +26,18 @@ def get_random_char():
     nr_numbers = random.randint(2, 4)
     nr_symbols = random.randint(2, 4)
 
-    password_list = []
+    password_letters = [random.choice(letters) for _ in range(nr_letters)]
+    password_numbers = [random.choice(numbers) for _ in range(nr_numbers)]
+    password_symbols = [random.choice(symbols) for _ in range(nr_symbols)]
 
-    for char in range(nr_letters):
-        password_list.append(random.choice(letters))
-
-    for char in range(nr_numbers):
-        password_list.append((random.choice(numbers)))
-
-    for char in range(nr_symbols):
-        password_list.append((random.choice(symbols)))
-
+    password_list = password_letters + password_numbers + password_symbols
     return  password_list
+
+def copy_to_clipboard(final_password):
+    password_input.delete(0, END)
+    pyperclip.copy(final_password)
+    password_input.insert(0, pyperclip.paste())
+
 # ----------------------- SAVE PASSWORD -------------------------- #
 def save_password():
     website = website_name.get()
