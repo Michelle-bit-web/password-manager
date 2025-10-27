@@ -1,6 +1,7 @@
 from tkinter import *
 import ctypes as ct
 from tkinter import messagebox
+import random
 
 LABEL_WIDTH = 15
 BG_COLOR = "#F2EAD3"
@@ -9,24 +10,51 @@ FONT_NAME = "Arial"
 YOUR_EMAIL = "test@mail.com"
 
 # -------------------- PASSWORD GENERATOR ----------------------- #
+def generate_password():
+    pw_list = get_random_char()
+    random.shuffle(pw_list)
+    final_password = "".join(pw_list)
+    print(final_password)
 
+def get_random_char():
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+    symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
+    nr_letters = random.randint(8, 10)
+    nr_numbers = random.randint(2, 4)
+    nr_symbols = random.randint(2, 4)
+
+    password_list = []
+
+    for char in range(nr_letters):
+        password_list.append(random.choice(letters))
+
+    for char in range(nr_numbers):
+        password_list.append((random.choice(numbers)))
+
+    for char in range(nr_symbols):
+        password_list.append((random.choice(symbols)))
+
+    return  password_list
 # ----------------------- SAVE PASSWORD -------------------------- #
 def save_password():
     website = website_name.get()
     user = user_name.get()
     pw = password.get()
 
-    is_ok_message = messagebox.askokcancel(
-        title=website,
-        message=f"These are the details entered:\nEmail: {user}\nPassword: {password}\nDo you want to save it?"
-    )
-
-    if is_ok_message:
-        with open("data.txt", "a") as file:
-            file.write(f"{website} | {user} | {pw} \n")
-        website_input.delete(0, END)
-        password_input.delete(0, END)
+    if website == "" or user == "" or pw == "":
+        info_message = messagebox.showinfo(title=website, message="Oops, don´t leave any field empty.")
+    else:
+        is_ok_message = messagebox.askokcancel(
+            title=website,
+            message=f"These are the details entered:\nEmail: {user}\nPassword: {password}\nDo you want to save it?"
+        )
+        if is_ok_message:
+            with open("data.txt", "a") as file:
+                file.write(f"{website} | {user} | {pw} \n")
+            website_input.delete(0, END)
+            password_input.delete(0, END)
 
 # ----------------------- UI SETUP -------------------------- #
 #GUI window
@@ -57,7 +85,7 @@ user_input.insert(0, YOUR_EMAIL)
 password_input = Entry(width=32, textvariable=password)
 
 #Button
-generate_password_btn = Button(text="Generate Password", highlightthickness=0, bg=ACCENT_COLOR, fg="white", font=(FONT_NAME, 10))
+generate_password_btn = Button(text="Generate Password", highlightthickness=0, bg=ACCENT_COLOR, fg="white", font=(FONT_NAME, 10), command=generate_password)
 save_password_btn = Button(text="Save", width=39, highlightthickness=0, bg=ACCENT_COLOR, fg="white", font=(FONT_NAME, 10), command=save_password)
 
 #Elements position within grid system
