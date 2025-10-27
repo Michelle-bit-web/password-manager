@@ -1,5 +1,6 @@
 from tkinter import *
 import ctypes as ct
+from tkinter import messagebox
 
 LABEL_WIDTH = 15
 BG_COLOR = "#F2EAD3"
@@ -12,10 +13,20 @@ YOUR_EMAIL = "test@mail.com"
 
 # ----------------------- SAVE PASSWORD -------------------------- #
 def save_password():
-    with open("data.txt", "a") as file:
-        file.write(f"{website_name.get()} | {user_name.get()} | {password.get()} \n")
-    website_input.delete(0,END)
-    password_input.delete(0, END)
+    website = website_name.get()
+    user = user_name.get()
+    pw = password.get()
+
+    is_ok_message = messagebox.askokcancel(
+        title=website,
+        message=f"These are the details entered:\nEmail: {user}\nPassword: {password}\nDo you want to save it?"
+    )
+
+    if is_ok_message:
+        with open("data.txt", "a") as file:
+            file.write(f"{website} | {user} | {pw} \n")
+        website_input.delete(0, END)
+        password_input.delete(0, END)
 
 # ----------------------- UI SETUP -------------------------- #
 #GUI window
