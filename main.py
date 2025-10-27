@@ -5,6 +5,7 @@ LABEL_WIDTH = 15
 BG_COLOR = "#F2EAD3"
 ACCENT_COLOR = "#202020"
 FONT_NAME = "Arial"
+YOUR_EMAIL = "test@mail.com"
 
 # -------------------- PASSWORD GENERATOR ----------------------- #
 
@@ -30,7 +31,9 @@ label_password = Label(text="Password:", width=LABEL_WIDTH, font=(FONT_NAME, 12,
 
 #Input
 website_input = Entry(width=53)
+website_input.focus()
 user_input = Entry(width=53)
+user_input.insert(0, YOUR_EMAIL)
 password_input = Entry(width=32)
 #Button
 generate_password_btn = Button(text="Generate Password", highlightthickness=0, bg=ACCENT_COLOR, fg="white", font=(FONT_NAME, 10))
